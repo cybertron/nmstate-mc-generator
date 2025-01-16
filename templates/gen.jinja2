@@ -1,0 +1,62 @@
+<html>
+<head>
+    <title>NMState Machine-Config Generator</title>
+</head>
+<body>
+<center>
+<h1>NMState Machine-Config Generator</h1>
+<form method='post'>
+<table>
+    <tr>
+        <td colspan='2'><center><h3>Node Counts</h3></center></td>
+    </tr>
+    <tr>
+        <td>Masters</td> <td><input type='number' name='master_count' pattern="[0-9]*" inputmode="numeric" value='{{master_count}}'></td>
+    </tr>
+    <tr>
+        <td>Workers</td> <td><input type='number' name='worker_count' pattern="[0-9]*" inputmode="numeric" value='{{worker_count}}'></td>
+    </tr>
+    <tr>
+        <td colspan='2'><center>Note: This will reset all configurations below.<br><input type='submit' value='Update' name='update'></center></td>
+    </tr>
+<table>
+{% if error != '' %}
+    <tr>
+        <td colspan='2'><center><p style='color:red; font-weight:bold'>{{error}}</p></center></td>
+    </tr>
+{% else %}
+<table>
+    <tr>
+        <td colspan='2'><center><h3>Master Configurations</h3></center></td>
+    </tr>
+    {% for i in masters %}
+    <tr>
+        <td>Hostname</td> <td><input type='text' name='master_hostname_{{i}}' size='60'></td>
+    </tr>
+    <tr>
+        <td>NMState Configuration</td> <td><textarea name='master_config_{{i}}' rows='10' cols='60'></textarea></td>
+    </tr>
+    <tr><td><br></td></tr>
+    {% endfor %}
+    <tr>
+        <td colspan='2'><center><h3>Worker Configurations</h3></center></td>
+    </tr>
+    {% for i in workers %}
+    <tr>
+        <td>Hostname</td> <td><input type='text' name='worker_hostname_{{i}}' size='60'></td>
+    </tr>
+    <tr>
+        <td>NMState Configuration</td> <td><textarea name='worker_config_{{i}}' rows='10' cols='60'></textarea></td>
+    </tr>
+    <tr><td><br></td></tr>
+    {% endfor %}
+    <tr>
+        <td colspan='2'><center><input type='submit' value='Generate Configuration' name='generate'></center></td>
+    </tr>
+{% endif %}
+</table>
+</form>
+</center>
+</body>
+</html>
+
